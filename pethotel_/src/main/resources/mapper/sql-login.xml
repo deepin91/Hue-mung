@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pethotel.mapper.LoginMapper">
+	<select id="login" parameterType="pethotel.dto.LoginDto" resultType="pethotel.dto.UserDto">
+		select user_id, user_password, user_name, user_email 
+		  from users 
+		 where user_id = #{userId} and user_password = #{userPassword}
+	</select>
+	<insert id="memberRegistration" parameterType="String">
+		insert into users(user_id, user_password, user_name, user_phonenumber, user_email)
+		values(#{userId}, #{userPassword}, #{userName}, #{userPhonenumber}, #{userEmail})
+	</insert>
+	<select id="countBySameUserId" parameterType="String" resultType="int">
+		select count(*) 
+		from users
+		where user_id = #{userId}
+	</select>
+	<select id="isUserIdExists" resultType="boolean" parameterType="String">
+	select count(*) > 0
+	from users
+	where user_id = #{userId}
+	</select>
+</mapper>
