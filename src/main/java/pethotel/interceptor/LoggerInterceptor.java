@@ -26,3 +26,17 @@ public class LoggerInterceptor implements HandlerInterceptor {
 		log.debug("-------------- END --------------");
 	}
 }
+
+// HandlerInterceptor은 스프링에서 기본적으로 제공되는 인터페이스(라이브러리에 있음 - 의존성 추가하면 가져와 사용 가능함)
+// 인터페이스는 정의가 불가능하므로 implements 적어서 구현 클래스에 오버라이드(재정의) 해야함
+// 클래스에 입력한다해서 바로 사용가능x, WebMvcConfigurer를 implements한 설정 클래스에서 등록해야함
+
+// -즉, 검증, 권한 체크 등 이런 처리를 하고싶다면 Interceptor 클래스 파일을 만들어 스프링에서 제공하는 
+// 라이브러리 HandlerInterceptor을 가져와 해당 클래스 파일에 재정의
+// 그 후, Configurer(WebMvcConfigurer)파일 생성해 등록
+// 구현 클래스에서 만든 내용을 Configurer파일에 registry.addInterceptor(new RoleCheckInterceptor())과 같은 방식으로 기입
+
+//Servlet - 자바로 만든 웹 요청/응답을 처리하는 프로그램(웹 요청 처리 기본 단위)
+//HttpServletRequest = 요청 정보
+//HttpServletResponse = 응답 정보
+//Object handler = 컨트롤러 실행 정보

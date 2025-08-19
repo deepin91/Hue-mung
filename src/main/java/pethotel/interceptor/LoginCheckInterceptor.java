@@ -26,3 +26,5 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 }
 //request.getRequestURI().indexOf("/list") >= 0 ||
 //request.getRequestURI().indexOf("/company") >= 0 ||
+
+// 나중에 커스텀 어노테이션 패키지 하나 만들어서 실제로 만들어보고 사용(연해보면 좋을 듯
