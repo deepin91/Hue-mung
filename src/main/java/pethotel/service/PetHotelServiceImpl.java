@@ -194,10 +194,15 @@ public class PetHotelServiceImpl implements PetHotelService {
 		return petHotelMapper.reviewCount(companyIdx);
 	}
 
-	
-
-
-
-
-
 }
+
+// 단일 작업을 수행하는 경우에는 상관 없으나
+// 동시에 여러가지 일, 한번에 두 가지 이상의 작업을 처리해야하는 경우엔 Transaction을 사용하는 편이 맞음
+// 
+// throws Exception - 예외가 발생할 수 있으면 적어야 함. 해당 메서드가 예외 발생할 수 있다 미리 고지하는 느낌? 
+// - 실제로 발생할 가능성이 높은 예외타입만 명시하고 남발은 금물
+
+
+
+
+

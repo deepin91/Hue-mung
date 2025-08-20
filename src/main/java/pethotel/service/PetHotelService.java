@@ -11,7 +11,6 @@ import pethotel.dto.ConsultingDto;
 import pethotel.dto.ReviewDto;
 import pethotel.dto.StarDto;
 
-@Service
 public interface PetHotelService {
 //	List<ConsultingDto>insertconsulting ()throws Exception;
 
