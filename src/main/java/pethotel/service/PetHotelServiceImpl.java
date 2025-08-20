@@ -202,7 +202,11 @@ public class PetHotelServiceImpl implements PetHotelService {
 // throws Exception - 예외가 발생할 수 있으면 적어야 함. 해당 메서드가 예외 발생할 수 있다 미리 고지하는 느낌? 
 // - 실제로 발생할 가능성이 높은 예외타입만 명시하고 남발은 금물
 
-
+// -개선해야할 부분 
+// 도메인 별 로 Mapper 분리 - 개선점
+//(INSERT/UPDATE/DELETE 같은..) insertconsulting, insertreply, insertcompany, insertreview, insertapply, insertConsulting
+// 위와 같은 경우에는 트랜잭션 필요. / 조회하는 부분에 대해서는  필요 x - @Transaction(readOnly = true)로 읽기전용 설정해줌
+// 요청/호출하는 사람이 선택해야할 경우, 도메인 의미를 가진 경우
 
 
 
