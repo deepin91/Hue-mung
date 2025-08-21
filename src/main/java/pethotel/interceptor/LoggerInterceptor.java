@@ -40,3 +40,8 @@ public class LoggerInterceptor implements HandlerInterceptor {
 //HttpServletRequest = 요청 정보
 //HttpServletResponse = 응답 정보
 //Object handler = 컨트롤러 실행 정보
+
+// AOP -  매번 공통적으로 실행해야하는 동작에 대해 사용
+// interceptor과 AOP차이점
+// ㄴ 매번 실행해야하는 웹 요청(HTTP) 단위 작업 - interceptor (전처리)
+// / 매번 실행해야하는 메서드 호출 단위 작업 - AOP(비지니스 로직 호출할 때마다 필요한 작업) 

@@ -48,7 +48,12 @@ public interface PetHotelMapper {
 	ReviewDto averageStar(int companyIdx);
 	List<ReviewDto> reviewlist2Paging(Map<String, Object> param);
 	int reviewCount(int companyIdx);
-	
-
-
 }
+// - 개선안
+// 하나의 Mapper파일에 다 몰려있으면 충돌가능성이 높고, 테스트하기에 효율,용이하기때문에 도메인별로 Mapper 파일 나눠서 설정
+// +XML파일 쿼리 파일도 Mapper파일에 맞게 나눠서 재설정
+// XML파일 에서는 MyBatis가 인터페이스 메서드와 XML 쿼리를 매칭할 때 namespace + id 조합을 기준으로 찾기 때문에 namespace = 반드시 인터페이스 FQCN과 같아야 함
+
+// namespace = <mapper> 태그 안에서 설정하는 값
+// FQCN (Fully Qualified Class Name) = "패키지명 + 클래스명" 전체 경로
+// 즉, mapper.xml의 <mapper namespace="..."> 값은 반드시 매핑 대상 인터페이스의 FQCN과 같아야 한다는 뜻
