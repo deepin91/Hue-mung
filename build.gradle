@@ -1,12 +1,14 @@
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.8-SNAPSHOT'
+//	id 'org.springframework.boot' version '2.7.18' // 추후 안정버전으로 개선
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
-group = 'com.example'
+group = 'com.pethotel' //group = 'com.example' 기본값에서 pethotel로 통일
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
+// 현재 프로젝트 JDK 버전이 11이라 너무 시대에 뒤떨어져있음 - 17 또는 21로 개선
 
 configurations {
 	compileOnly {
@@ -31,7 +33,10 @@ implementation 'org.springframework.boot:spring-boot-starter'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
-	//testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// 08/22 
+	// - 체크 위해 src에 test 폴더 및 관련 항목(의존성)추가 
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	
 	// https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4.1
 	implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
 }
@@ -39,3 +44,6 @@ implementation 'org.springframework.boot:spring-boot-starter'
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+
+
