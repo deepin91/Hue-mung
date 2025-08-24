@@ -1,6 +1,6 @@
 package pethotel.configuration;
 
-import org.springframework.context.annotation.Bean;
+//import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -10,41 +10,41 @@ import pethotel.interceptor.LoginCheckInterceptor;
 
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {
-//	@Override
-//	public void addInterceptors(InterceptorRegistry registry) {
-//		registry.addInterceptor(new LoggerInterceptor());
-//		registry.addInterceptor(new LoginCheckInterceptor());
-//	}
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new LoggerInterceptor());
+		registry.addInterceptor(new LoginCheckInterceptor());
+	}
     
-    @Override  //08/23
-    public void addInterceptors(InterceptorRegistry registry) {
-      // 1) 요청 로거: 전역, 정적/에러는 제외
-      registry.addInterceptor(new LoggerInterceptor())
-              .order(1)
-              .addPathPatterns("/**")
-              .excludePathPatterns(
-                  "/css/**", "/js/**", "/images/**", "/webjars/**",
-                  "/favicon.ico", "/error");
-
-      // 2) 로그인 체크: 보호가 필요한 경로만, 공개 경로는 제외
-      registry.addInterceptor(loginCheckInterceptor())  // 주입 권장
-              .order(2)
-              .addPathPatterns("/**")
-              .excludePathPatterns(
-                  "/", "/login", "/logout", "/signup",
-                  "/companies/**", "/reviews/**", // 공개 읽기 API면 제외
-                  "/css/**", "/js/**", "/images/**", "/webjars/**",
-                  "/favicon.ico", "/error");
-    }
-	
+//    @Override  //08/23
+//    public void addInterceptors(InterceptorRegistry registry) {
+//      // 1) 요청 로거: 전역, 정적/에러는 제외
+//      registry.addInterceptor(new LoggerInterceptor())
+//              .order(1)
+//              .addPathPatterns("/**")
+//              .excludePathPatterns(
+//                  "/css/**", "/js/**", "/images/**", "/webjars/**",
+//                  "/favicon.ico", "/error");
+//
+//      // 2) 로그인 체크: 보호가 필요한 경로만, 공개 경로는 제외
+//      registry.addInterceptor(loginCheckInterceptor())  // 주입 권장
+//              .order(2)
+//              .addPathPatterns("/**")
+//              .excludePathPatterns(
+//                  "/", "/login", "/logout", "/signup",
+//                  "/companies/**", "/reviews/**", // 공개 읽기 API면 제외
+//                  "/css/**", "/js/**", "/images/**", "/webjars/**",
+//                  "/favicon.ico", "/error");
+//    }
+// 08/24 - 주석처리	
 	
 
 	// 의존성 주입이 필요하면 @Bean으로 등록해서 주입 받기
-	  @Bean
-	  public LoginCheckInterceptor loginCheckInterceptor() { 
-	    return new LoginCheckInterceptor(); 
-	  }
-	
+//	  @Bean
+//	  public LoginCheckInterceptor loginCheckInterceptor() { 
+//	    return new LoginCheckInterceptor(); 
+//	  }
+//	
 }
 
 // Interceptor 구현클래스에서 재정의한 메서드가 실제 요청 시 실행될 수 있도록 스프링 mvc에 등록하는 설정 클래스 
