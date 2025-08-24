@@ -58,18 +58,20 @@ public class PetHotelController {
 	}
 
 	// ----------------------qna상세 페이지---------------------------------
-	@GetMapping("/detail.openconsultDetail.do")
-	public ModelAndView detail(@RequestParam int consultingIdx) throws Exception {
+	@GetMapping("/detail.openconsultDetail.do") // 여기서도 URL에 인덱스 뜨는거 고쳐야함 
+	public ModelAndView detail(@RequestParam int consultingIdx) throws Exception { //URL 파라미터로 consultingIdx를 받아 > service 메서드- petHotelService.detail(consultingIdx) 호출  >  결과값 consultingDtoㄹ,ㄹ View에 전달
+	    // data flow check breakpoint set(메서드 첫 줄에)-08/24
+		ConsultingDto consultingDto = petHotelService.detail(consultingIdx); // 1. Q&A 게시글 상세페이지 메서드 요청 - consultingIdx 받아서 service 호출
+		ModelAndView mv = new ModelAndView("Business_answer_content.html"); // 2. "Business_answer_content.html"이라는 뷰 이름을 지정해 ModelAndView 객체 mv를 생성
 
-		ConsultingDto consultingDto = petHotelService.detail(consultingIdx);
-		ModelAndView mv = new ModelAndView("Business_answer_content.html");
-
-		mv.addObject("detail", consultingDto);
+		mv.addObject("detail", consultingDto); // 3.view 파일에 detail이라는 속성의 이름으로(=key로) consultingDto =값(value)을 담은 객체를 view로 전달 
+//      mv.addObject("키(key)", 값(value); - 사용 방식
 		return mv;
-
 	}
 
 	@PostMapping("/reply/1234")
+	//***개선점***
+	//하단 댓글 작성할 수 있는 사람 - 관리자 권한 보유한 사람 으로 권한제어 필요함.
 	public String insertreply(HttpSession session, ConsultingDto consultingDto) throws Exception {
 		petHotelService.insertreply(consultingDto);
 //		return ("redirect:/detail.openconsultDetail.do");
@@ -119,7 +121,7 @@ public class PetHotelController {
 	}
 
 	// -------------------------회사 상세----------------------------------
-	@GetMapping("/detail.company")
+	@GetMapping("/detail.company") //여기 왜 회사 상세가 2개인지 확인해보고 필요없는건 다 빼버려야하
 	public ModelAndView detailcompany() throws Exception {
 		ModelAndView mv = new ModelAndView("Company_info_detail.html");
 		return mv;
@@ -153,7 +155,9 @@ public class PetHotelController {
 	}
 
 	// -------------------------------------------------------------업체 상세페이지
-	@GetMapping("/companyDetail.do")
+	@GetMapping("/companyDetail.do")//<--여기 개선
+	//**개산점**    
+    //추후 URL 인덱스넘버 알고 업체명으로 뜨도록 DB에 slug 추가해서 설정, 컨트롤러 및 쿼리, 서비스레이어 로직 변경예정 - 보안성 및 최적화 다른 관련 코드들도 수정
 	public ModelAndView companydetail(@RequestParam("companyIdx")int companyIdx,
 									  @RequestParam	(value = "currentPage", required = false, defaultValue = "1") int currentPage)throws Exception {
 		//리뷰 페이징처리							  
@@ -237,5 +241,7 @@ public class PetHotelController {
 		mv.addObject("reservation", applyDto);
 		return mv;
 	}
-
 }
+
+// 08/24 
+// **개선점** - 전반적으로 네이밍 부분이 헷갈림 - 직관적이면서 통일감을 주는 네이밍 재설정 필요

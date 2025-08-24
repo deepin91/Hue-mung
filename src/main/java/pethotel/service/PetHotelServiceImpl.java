@@ -43,6 +43,7 @@ public class PetHotelServiceImpl implements PetHotelService {
 	public List<ConsultingDto> selectConsultingList(int offset) throws Exception {
 		return petHotelMapper.selectConsultingList(offset);
 	}
+	
 	@Override
 	public int selectConsultingListCount() throws Exception {
 		return petHotelMapper.selectConsultingListCount();
@@ -52,14 +53,12 @@ public class PetHotelServiceImpl implements PetHotelService {
 
 	@Override
 	public void insertreply(ConsultingDto consultingDto) throws Exception {
-	
 		petHotelMapper.insertreply(consultingDto);
 		
 	}
 	
 	@Override
-	public ConsultingDto detail(int consultingIdx) throws Exception {
-	
+	public ConsultingDto detail(int consultingIdx) throws Exception {	
 		return petHotelMapper.detail(consultingIdx);
 	}
 
@@ -91,13 +90,22 @@ public class PetHotelServiceImpl implements PetHotelService {
 		
 		return petHotelMapper.onecompany(companyIdx);
 	}
-//디테일보는거
+	
+//업체 상세페이지
 	@Override
 	public CompanyDto companydetail(int companyIdx) {
-		
 		return petHotelMapper.companydetail(companyIdx);
 	}
-
+	// 업체 상세페이지 볼 때 URL이 http://localhost:8080/companyDetail.do?companyIdx=3 이런식으로 떠서
+	// 저렇게 보여지면 인덱스 넘버로 다른 업체정보에 접근 가능하니까 미관상 + 보완적 측면 고려해서 바꾸는 게 좋을 듯 /companies/AnyMalls 이런식으로 업체명 뜨게
+	// 1. DB에 company 테이블에 slug 컬럼 추가해 URL에 사용될 업체명을 저장, 설정
+	// 2. 업체 등록 로직 수정 (slug 생성 및 저장) - 새 업체가 등록될 때 companyName을 기반으로 slug생성해서 DB에 함게 저장하도록 로직 수정해야함
+	// 슬러그는 URL에 적합하게 공백과 특수문자를 제거하고 소문자로 변환하는 과정이 필요
+	// 3. **URL 라우팅 및 조회 로직 변경 (슬러그로 데이터 찾기)** (중요) - 기존의 companyDetail.do?companyIdx=3 라우팅을 companyDetail/{slug} 형식으로 변
+	// MyBatis방식은 쿼리 수정 -  CompanyMapper.xml 파일 쿼리 수정하고, service, serviceImpl에 메서드 정의 및 비지니스로직 추가
+	// html view 템플릿에서 메인페이지 >  상세페이지로 가는 링크 변경하면 끝.
+	// +++추후 JPA방식으로 수정 시 다른 부분은 다 똑같고 JPA Repository 인터페이스에 slug 이용해서 DB 조회하는 메서드 추가하면 됨 - DB 조회 로직 추가
+	
 	@Override
 	public List<ReviewDto>reviewlist2(int companyIdx) {
 		// TODO Auto-generated method stub
@@ -142,20 +150,17 @@ public class PetHotelServiceImpl implements PetHotelService {
 
 	@Override
 	public CompanyDto displayinsert(int companyIdx) {
-		
 		return petHotelMapper.displayinsert(companyIdx);
 	}
 //페이징
 
 	@Override
 	public int selectBoardListCount() throws Exception {
-	
 		return petHotelMapper.selectBoardListCount();
 	}
 
 	@Override
 	public List<StarDto> star() throws Exception {
-
 		return petHotelMapper.star();
 	}
 
