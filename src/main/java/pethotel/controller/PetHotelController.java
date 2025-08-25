@@ -104,7 +104,12 @@ public class PetHotelController {
 		petHotelService.insertcompany(file, companydto);
 		return ("redirect:/company");
 	}
+    // 08/25 
+	// 뭔가 url이며 컨트롤러 순서도 뒤죽박죽이고 조잡한 부분이 너무 많음. -  효율적으로 개선해야함.
+	// 그리고 다들 등록하기 버튼만 있을 뿐 수정/삭제 관련된 기능이 없음 
+	// -수정/삭제 하려면 Q&A 댓글 작성 및 수정,삭제는 오로지 admin만 가능하도록 권한 set해야함. +리뷰나 뭐 게시글 등 일개 유저가 남긴 것들은 본인들이 수정/삭제 가능하도록 설정해야.. (유저/관리자 구분해서 권한 별도로 설정) 
 
+	
 	// ---------------------------메인페이지--------------------------
 	@GetMapping("/mainpage")
 	public ModelAndView mainpage(
@@ -114,7 +119,7 @@ public class PetHotelController {
 
 		List<CompanyDto> list = petHotelService.companylist((currentPage - 1) * 4);
 		mv.addObject("list", list);
-		mv.addObject("pageCount", Math.ceil(petHotelService.selectBoardListCount() / 4.0));
+		mv.addObject("pageCount", Math.ceil(petHotelService.selectBoardListCount() / 4.0)); // 0825 serviceImpl 파일의 selectBoardListCount() 메서드에서  return petHotelMapper.selectBoardListCount();를 수행함
 		mv.addObject("currentPage", currentPage);
 
 		return mv;
