@@ -161,7 +161,7 @@ public class PetHotelController {
 
 	// -------------------------------------------------------------업체 상세페이지
 	@GetMapping("/companyDetail.do")//<--여기 개선
-	//**개산점**    
+	//**개선점**    
     //추후 URL 인덱스넘버 알고 업체명으로 뜨도록 DB에 slug 추가해서 설정, 컨트롤러 및 쿼리, 서비스레이어 로직 변경예정 - 보안성 및 최적화 다른 관련 코드들도 수정
 	public ModelAndView companydetail(@RequestParam("companyIdx")int companyIdx,
 									  @RequestParam	(value = "currentPage", required = false, defaultValue = "1") int currentPage)throws Exception {
