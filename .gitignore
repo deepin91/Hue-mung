@@ -11,3 +11,5 @@ pethotel_/build/
 pethotel_/.classpath
 pethotel_/.project
 pethotel_/.settings/
+/.apt_generated/
+/.apt_generated_tests/
