@@ -10,5 +10,5 @@ public interface LoginService {
 	public UserDto login(LoginDto loginDto) throws Exception;
 	// 회원가입
 	public void memberRegistration(UserDto userDto) throws Exception;
-	public boolean isUserIdExists(String userId)throws Exception;
+	public boolean isUserIdExists(String userId)throws Exception; //
 }

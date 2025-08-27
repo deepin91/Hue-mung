@@ -57,7 +57,7 @@ public class PetHotelController {
 		
 	}
 
-	// ----------------------qna상세 페이지---------------------------------
+	 /* ----------------------qna상세 페이지--------------------------------- */
 	@GetMapping("/detail.openconsultDetail.do") // 여기서도 URL에 인덱스 뜨는거 고쳐야함 
 	public ModelAndView detail(@RequestParam int consultingIdx) throws Exception { //URL 파라미터로 consultingIdx를 받아 > service 메서드- petHotelService.detail(consultingIdx) 호출  >  결과값 consultingDtoㄹ,ㄹ View에 전달
 	    // data flow check breakpoint set(메서드 첫 줄에)-08/24
@@ -91,8 +91,7 @@ public class PetHotelController {
 		return mv;
 	}
 
-	// --------------------------------업체
-	// 등록-----------------------------------------
+	// --------------------------------업체등록-----------------------------------------
 	@GetMapping("/company")
 	public ModelAndView companyregist() throws Exception {
 		ModelAndView mv = new ModelAndView("Business_registration.html");
@@ -125,6 +124,9 @@ public class PetHotelController {
 		return mv;
 	}
 
+	
+	/* 주목 */
+	 
 	// -------------------------회사 상세----------------------------------
 	@GetMapping("/detail.company") //여기 왜 회사 상세가 2개인지 확인해보고 필요없는건 다 빼버려야하
 	public ModelAndView detailcompany() throws Exception {
