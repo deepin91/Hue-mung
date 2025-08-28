@@ -45,33 +45,40 @@ public class PetHotelController {
 //		petHotelService.insertconsulting(consultingDto);
 //		return ("redirect:/list");
 //	}
-	
+
 	@PostMapping("/registerConsulting.do")
-	public String insertConsulting(HttpSession session, ConsultingDto consultingDto) throws Exception{
-		UserDto loginUser = (UserDto)session.getAttribute("users");
-		
+	public String insertConsulting(HttpSession session, ConsultingDto consultingDto) throws Exception {
+		UserDto loginUser = (UserDto) session.getAttribute("users");
+
 		consultingDto.setCUserId(loginUser.getUserId());
 		consultingDto.setConsultingCreatedt(LocalDateTime.now());
 		petHotelService.insertConsulting(consultingDto);
 		return "redirect:/list";
-		
+
 	}
 
-	 /* ----------------------qna상세 페이지--------------------------------- */
-	@GetMapping("/detail.openconsultDetail.do") // 여기서도 URL에 인덱스 뜨는거 고쳐야함 
-	public ModelAndView detail(@RequestParam int consultingIdx) throws Exception { //URL 파라미터로 consultingIdx를 받아 > service 메서드- petHotelService.detail(consultingIdx) 호출  >  결과값 consultingDtoㄹ,ㄹ View에 전달
-	    // data flow check breakpoint set(메서드 첫 줄에)-08/24
-		ConsultingDto consultingDto = petHotelService.detail(consultingIdx); // 1. Q&A 게시글 상세페이지 메서드 요청 - consultingIdx 받아서 service 호출
-		ModelAndView mv = new ModelAndView("Business_answer_content.html"); // 2. "Business_answer_content.html"이라는 뷰 이름을 지정해 ModelAndView 객체 mv를 생성
+	/* ----------------------qna상세 페이지--------------------------------- */
+	@GetMapping("/detail.openconsultDetail.do") // 여기서도 URL에 인덱스 뜨는거 고쳐야함
+	public ModelAndView detail(@RequestParam int consultingIdx) throws Exception { // URL 파라미터로 consultingIdx를 받아 >
+																					// service 메서드-
+																					// petHotelService.detail(consultingIdx)
+																					// 호출 > 결과값 consultingDtoㄹ,ㄹ View에
+																					// 전달
+		// data flow check breakpoint set(메서드 첫 줄에)-08/24
+		ConsultingDto consultingDto = petHotelService.detail(consultingIdx); // 1. Q&A 게시글 상세페이지 메서드 요청 - consultingIdx
+																				// 받아서 service 호출
+		ModelAndView mv = new ModelAndView("Business_answer_content.html"); // 2. "Business_answer_content.html"이라는 뷰
+																			// 이름을 지정해 ModelAndView 객체 mv를 생성
 
-		mv.addObject("detail", consultingDto); // 3.view 파일에 detail이라는 속성의 이름으로(=key로) consultingDto =값(value)을 담은 객체를 view로 전달 
+		mv.addObject("detail", consultingDto); // 3.view 파일에 detail이라는 속성의 이름으로(=key로) consultingDto =값(value)을 담은 객체를
+												// view로 전달
 //      mv.addObject("키(key)", 값(value); - 사용 방식
 		return mv;
 	}
 
 	@PostMapping("/reply/1234")
-	//***개선점***
-	//하단 댓글 작성할 수 있는 사람 - 관리자 권한 보유한 사람 으로 권한제어 필요함.
+	// ***개선점***
+	// 하단 댓글 작성할 수 있는 사람 - 관리자 권한 보유한 사람 으로 권한제어 필요함.
 	public String insertreply(HttpSession session, ConsultingDto consultingDto) throws Exception {
 		petHotelService.insertreply(consultingDto);
 //		return ("redirect:/detail.openconsultDetail.do");
@@ -103,12 +110,12 @@ public class PetHotelController {
 		petHotelService.insertcompany(file, companydto);
 		return ("redirect:/company");
 	}
-    // 08/25 
-	// 뭔가 url이며 컨트롤러 순서도 뒤죽박죽이고 조잡한 부분이 너무 많음. -  효율적으로 개선해야함.
-	// 그리고 다들 등록하기 버튼만 있을 뿐 수정/삭제 관련된 기능이 없음 
-	// -수정/삭제 하려면 Q&A 댓글 작성 및 수정,삭제는 오로지 admin만 가능하도록 권한 set해야함. +리뷰나 뭐 게시글 등 일개 유저가 남긴 것들은 본인들이 수정/삭제 가능하도록 설정해야.. (유저/관리자 구분해서 권한 별도로 설정) 
+	// 08/25
+	// 뭔가 url이며 컨트롤러 순서도 뒤죽박죽이고 조잡한 부분이 너무 많음. - 효율적으로 개선해야함.
+	// 그리고 다들 등록하기 버튼만 있을 뿐 수정/삭제 관련된 기능이 없음
+	// -수정/삭제 하려면 Q&A 댓글 작성 및 수정,삭제는 오로지 admin만 가능하도록 권한 set해야함. +리뷰나 뭐 게시글 등 일개 유저가
+	// 남긴 것들은 본인들이 수정/삭제 가능하도록 설정해야.. (유저/관리자 구분해서 권한 별도로 설정)
 
-	
 	// ---------------------------메인페이지--------------------------
 	@GetMapping("/mainpage")
 	public ModelAndView mainpage(
@@ -118,17 +125,20 @@ public class PetHotelController {
 
 		List<CompanyDto> list = petHotelService.companylist((currentPage - 1) * 4);
 		mv.addObject("list", list);
-		mv.addObject("pageCount", Math.ceil(petHotelService.selectBoardListCount() / 4.0)); // 0825 serviceImpl 파일의 selectBoardListCount() 메서드에서  return petHotelMapper.selectBoardListCount();를 수행함
+		mv.addObject("pageCount", Math.ceil(petHotelService.selectBoardListCount() / 4.0)); // 0825 serviceImpl 파일의
+																							// selectBoardListCount()
+																							// 메서드에서 return
+																							// petHotelMapper.selectBoardListCount();를
+																							// 수행함
 		mv.addObject("currentPage", currentPage);
 
 		return mv;
 	}
 
-	
 	/* 주목 */
-	 
+
 	// -------------------------회사 상세----------------------------------
-	@GetMapping("/detail.company") //여기 왜 회사 상세가 2개인지 확인해보고 필요없는건 다 빼버려야하
+	@GetMapping("/detail.company") // 여기 왜 회사 상세가 2개인지 확인해보고 필요없는건 다 빼버려야하
 	public ModelAndView detailcompany() throws Exception {
 		ModelAndView mv = new ModelAndView("Company_info_detail.html");
 		return mv;
@@ -161,22 +171,24 @@ public class PetHotelController {
 		}
 	}
 
-	// -------------------------------------------------------------업체 상세페이지
-	@GetMapping("/companyDetail.do")//<--여기 개선
-	//**개선점**    
-    //추후 URL 인덱스넘버 알고 업체명으로 뜨도록 DB에 slug 추가해서 설정, 컨트롤러 및 쿼리, 서비스레이어 로직 변경예정 - 보안성 및 최적화 다른 관련 코드들도 수정
-	public ModelAndView companydetail(@RequestParam("companyIdx")int companyIdx,
-									  @RequestParam	(value = "currentPage", required = false, defaultValue = "1") int currentPage)throws Exception {
-		//리뷰 페이징처리							  
-				int pageSize = 5;
-				int offset = (currentPage - 1) * pageSize;
-		
+	// ---------------------------------업체 상세페이지----------------------------
+	@GetMapping("/companyDetail.do") // <--여기 개선
+	// **개선점**
+	// 추후 URL 인덱스넘버 알고 업체명으로 뜨도록 DB에 slug 추가해서 설정, 컨트롤러 및 쿼리, 서비스레이어 로직 변경예정 - 보안성 및
+	// 최적화 다른 관련 코드들도 수정
+	public ModelAndView companydetail(@RequestParam("companyIdx") int companyIdx,
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage)
+			throws Exception {
+		// 리뷰 페이징처리
+		int pageSize = 5;
+		int offset = (currentPage - 1) * pageSize;
+
 		// 업체 상세정보
 		CompanyDto companydetail = petHotelService.companydetail(companyIdx);
 		ModelAndView mv = new ModelAndView("company_info_detail.html");
 
 		mv.addObject("companydetail", companydetail);
-		
+
 		CompanyDto reviewlist1 = petHotelService.reviewlist1(companyIdx);
 		mv.addObject("reviewlist1", reviewlist1);
 
@@ -186,28 +198,28 @@ public class PetHotelController {
 		mv.addObject("pageCount", Math.ceil(totalReviews / 5.0));
 		mv.addObject("currentPage", currentPage);
 		mv.addObject("companyIdx", companyIdx);
-				
+
 		// 별점 불러오는거
 		List<StarDto> starDto = petHotelService.star();
 		mv.addObject("star", starDto);
-		
+
 		// 평점 (이거 안되는데 확인해봐야함)
 		ReviewDto reviewDto = petHotelService.averageStar(companyIdx);
 		mv.addObject("averageStar", reviewDto);
 		return mv;
 	}
-	
+
 /////여기수정함 고쳐야함
 	@PostMapping("/insertCompanyReview")
 	public String insertreview(ReviewDto reviewDto, HttpSession session) throws Exception {
 		UserDto loginUser = (UserDto) session.getAttribute("users");
 		if (loginUser == null) {
-	        // 로그인 안 되어 있으면 로그인 페이지로 리다이렉트
-	        return "redirect:/login.do";
-	    }
+			// 로그인 안 되어 있으면 로그인 페이지로 리다이렉트
+			return "redirect:/login.do";
+		}
 		// reviewDto에 로그인된 사용자 ID 넣기
-	    reviewDto.setReviewWriter(loginUser.getUserId());
-	    
+		reviewDto.setReviewWriter(loginUser.getUserId());
+
 		petHotelService.insertreview(reviewDto);
 		return ("redirect:/companyDetail.do?companyIdx=" + reviewDto.getCompanyIdx());
 	}

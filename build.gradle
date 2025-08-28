@@ -29,12 +29,17 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.0'
+//	implementation 'javax.servlet:javax.servlet-api:4.0.1'
+	implementation 'org.slf4j:slf4j-api:1.7.36'
 	
-	compileOnly 'org.projectlombok:lombok'
+	
+	compileOnly 'org.projectlombok:lombok:1.18.30'
+	annotationProcessor 'org.projectlombok:lombok:1.18.30'
+	
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-	annotationProcessor 'org.projectlombok:lombok'
+	
 	// 08/22 
 	// - 체크 위해 src에 test 폴더 및 관련 항목(의존성)추가 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

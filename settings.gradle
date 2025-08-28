@@ -5,4 +5,4 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
-rootProject.name = 'pethotel_'
+rootProject.name = 'hue-mung'
