@@ -57,7 +57,7 @@ public class PetHotelController {
 
 	}
 
-	/* ----------------------qna상세 페이지--------------------------------- */
+	/* ----------------------qna상세 페이지--------------------------------- */ 
 	@GetMapping("/detail.openconsultDetail.do") // 여기서도 URL에 인덱스 뜨는거 고쳐야함
 	public ModelAndView detail(@RequestParam int consultingIdx) throws Exception { // URL 파라미터로 consultingIdx를 받아 >
 																					// service 메서드-

@@ -66,7 +66,8 @@ public class LoginController {
 	public boolean userIdCheck(@RequestParam("userId") String userId)throws Exception {// 회원가입 시 아이디 중복을 확인하는 기능을 구현한 메서드
 		return !loginService.isUserIdExists(userId); //true면 사용가능하도록 ->loginService로 이동
 	}// loginService.isUserIdExists(userId)의 반환값을 반전시킴 - 반전시킨 값 리턴함.
-	/*loginService 객체의 isUserIdExists 메서드를 호출하며, 사용자가 입력한 userId를 전달 > 이 메서드는 데이터베이스를 조회해 해당 아이디가 이미 존재하는지(true), **존재하지 않는지(false)**를 확인 */
+	/*loginService 객체의 isUserIdExists 메서드를 호출하며, 사용자가 입력한 userId를 전달 
+	 * > 이 메서드는 데이터베이스를 조회해 해당 아이디가 이미 존재하는지(true), **존재하지 않는지(false)**를 확인 */
 	
 	
 	// 회원 가입 처리 요청
