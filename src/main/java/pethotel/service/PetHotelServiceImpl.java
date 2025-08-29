@@ -88,7 +88,7 @@ public class PetHotelServiceImpl implements PetHotelService {
 	@Override
 	public CompanyDto onecompany(int companyIdx) throws Exception {
 		
-		return petHotelMapper.onecompany(companyIdx);
+		return petHotelMapper.onecompany(companyIdx); // 2.
 	}
 	
 //업체 상세페이지

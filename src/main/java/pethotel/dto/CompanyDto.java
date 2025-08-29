@@ -2,7 +2,7 @@ package pethotel.dto;
 
 import lombok.Data;
 
-@Data
+@Data // 5
 public class CompanyDto {
 	private int companyIdx;
 	private String companyName;

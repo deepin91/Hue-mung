@@ -145,31 +145,38 @@ public class PetHotelController {
 	}
 	// ----------------------회사 리스트---------------------------------
 
-	@GetMapping("/download.do")
-	public void downloadFile(@RequestParam int companyIdx, HttpServletResponse response) throws Exception {
-		CompanyDto companyDto = petHotelService.onecompany(companyIdx);
-		String companyPhoto = companyDto.getCompanyPhoto();
+	@GetMapping("/download.do") // ↓ 쿼리스트링에서 전달된 업체번호를(companyIdx) / ↓ 받음 응답 객체로 직접 브라우저에 파일을 보낼 수 있음
+	public void downloadFile(@RequestParam int companyIdx, HttpServletResponse response) throws Exception { // 반환하지 않고, 직접 파일 스트림을 응답에 사용
+		CompanyDto companyDto = petHotelService.onecompany(companyIdx); // 1 > 3 --companyIdx로 업체 정보 1건 조회
+		String companyPhoto = companyDto.getCompanyPhoto(); // 4 > 6 --getCompanyPhoto()로 파일 경로(사진 경로) 가져옴
 
-		FileInputStream fis = null;
-		BufferedInputStream bis = null;
-		BufferedOutputStream bos = null;
+		FileInputStream fis = null; // 7
+		BufferedInputStream bis = null; // 8
+		BufferedOutputStream bos = null; // 9
+		/* ↑ 나중에 finally에서 close() 하기 위해 try 바깥에서 미리 선언(선언만) */
 		try {
-			response.setHeader("Content-Disposition", "inline;");
-
-			byte[] buf = new byte[1024];
-			fis = new FileInputStream(companyPhoto);
-			bis = new BufferedInputStream(fis);
-			bos = new BufferedOutputStream(response.getOutputStream());
+			response.setHeader("Content-Disposition", "inline;"); // 10
+			/* ↑ 파일을 브라우저에서 바로 보여주겠다는 의미 // "attachment;"로 바꾸면 브라우저가 강제로 다운로드창 띄움*/
+			byte[] buf = new byte[1024]; // 11
+			fis = new FileInputStream(companyPhoto); // 12
+			bis = new BufferedInputStream(fis); // 13 --효율적인 읽기를 위해 BufferedInputStream 래핑
+			bos = new BufferedOutputStream(response.getOutputStream()); // 14  --응답으로 내보낼 출력 스트림 준비
+			
 			int read;
-			while ((read = bis.read(buf, 0, 1024)) != -1) {
-				bos.write(buf, 0, read);
+			while ((read = bis.read(buf, 0, 1024)) != -1) { // 15 > 17
+				bos.write(buf, 0, read); // 16 >  18  -- 반복
+			/* ↑ 반복문을 통해 파일 전체 내용을 1KB씩 계속 전송 */
 			}
 		} finally {
-			bos.close();
+			bos.close(); // > 다 돌고나면 finally구문 
 			bis.close();
 			fis.close();
-		}
+		} // 모든 작업이 끝나고 나면 열어둔 스트림들을 반드시 닫아줘야 함 close() 안 하면 데이터 유실가능성 있음
 	}
+	/* *개선점 -- 업로드 파일이 이미지일 경우 response.setContentType("image/jpeg") 같은 것도 추가하면 정확도를 높일 수 있음 
+	 * 파일명이 한글일 경우 Content-Disposition 설정은 URL 인코딩 필요 - 그럼 파일명이 한글인지 아닌지 판별하는 코드도 필요하겠지..?
+
+	 */
 
 	// ---------------------------------업체 상세페이지----------------------------
 	@GetMapping("/companyDetail.do") // <--여기 개선
