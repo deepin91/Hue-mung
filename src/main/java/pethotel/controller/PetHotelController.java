@@ -90,12 +90,13 @@ public class PetHotelController {
 	public ModelAndView consultinglist(
 			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage)
 			throws Exception {
-		ModelAndView mv = new ModelAndView("Business_QA.html");
-		List<ConsultingDto> list = petHotelService.selectConsultingList((currentPage - 1) * 10);
-		mv.addObject("list", list);
-		mv.addObject("pageCount", Math.ceil(petHotelService.selectConsultingListCount() / 10.0));
-		mv.addObject("currentPage", currentPage);
-		return mv;
+		ModelAndView mv = new ModelAndView("Business_QA.html");// 1 --08/30 > 4
+		/* ↓ selectConsultingList 메서드가 반환하는 컨설팅 데이터(ConsultingDto) 객체들의 목록(List)을 **list**라는 변수에 저장 */
+		List<ConsultingDto> list = petHotelService.selectConsultingList((currentPage - 1) * 10); // 2 -- 10개씩 보여지도록 페이징 처리하는 > 5
+		mv.addObject("list", list); // 6 > 8
+		mv.addObject("pageCount", Math.ceil(petHotelService.selectConsultingListCount() / 10.0)); // 9 > 11 (return petHotelMapper.selectConsultingListCount();) <-여기 타고 넘어옴
+		mv.addObject("currentPage", currentPage); // 12
+		return mv; // 13
 	}
 
 	// --------------------------------업체등록-----------------------------------------

@@ -39,14 +39,18 @@ public class PetHotelServiceImpl implements PetHotelService {
 
 	
 
-	@Override
+	@Override // --> DB에서 컨설팅목록 조회하는 것
 	public List<ConsultingDto> selectConsultingList(int offset) throws Exception {
-		return petHotelMapper.selectConsultingList(offset);
-	}
+		return petHotelMapper.selectConsultingList(offset); // 3 --08/30 --값들 반환/출력
+		/* ↑ 실제 데이터베이스 조회 로직을 담당하는 부분 
+		 * - 매퍼 객체의 메서드를 호출하며, 전달받은 offset 값을 넘겨줌 
+		 * - offset**은 데이터베이스 쿼리에서 가져올 데이터의 시작 위치를 지정하는 데 사용됨 
+		 */
+	} // 7
 	
 	@Override
 	public int selectConsultingListCount() throws Exception {
-		return petHotelMapper.selectConsultingListCount();
+		return petHotelMapper.selectConsultingListCount(); // 10 --08/30 -- 반환
 	}
 	
 
