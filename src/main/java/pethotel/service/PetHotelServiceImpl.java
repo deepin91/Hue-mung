@@ -94,7 +94,7 @@ public class PetHotelServiceImpl implements PetHotelService {
 //업체 상세페이지
 	@Override
 	public CompanyDto companydetail(int companyIdx) {
-		return petHotelMapper.companydetail(companyIdx);
+		return petHotelMapper.companydetail(companyIdx); // 4
 	}
 	// 업체 상세페이지 볼 때 URL이 http://localhost:8080/companyDetail.do?companyIdx=3 이런식으로 떠서
 	// 저렇게 보여지면 인덱스 넘버로 다른 업체정보에 접근 가능하니까 미관상 + 보완적 측면 고려해서 바꾸는 게 좋을 듯 /companies/AnyMalls 이런식으로 업체명 뜨게
@@ -115,7 +115,7 @@ public class PetHotelServiceImpl implements PetHotelService {
 	@Override
 	public CompanyDto reviewlist1(int companyIdx) {
 		// TODO Auto-generated method stub
-		return petHotelMapper.reviewlist1(companyIdx);
+		return petHotelMapper.reviewlist1(companyIdx); // 9 --08/30 -- CompanyDto reviewlist1 = petHotelService.reviewlist1(companyIdx); 에서 여기타서옴
 	}
 
 	@Override
@@ -161,16 +161,16 @@ public class PetHotelServiceImpl implements PetHotelService {
 
 	@Override
 	public List<StarDto> star() throws Exception {
-		return petHotelMapper.star();
+		return petHotelMapper.star(); //27 -- List<StarDto> starDto = petHotelService.star(); 타고 옴
 	}
 
 	@Override
 	public ReviewDto averageStar(int companyIdx) {
 		// TODO Auto-generated method stub
-		if (petHotelMapper.averageStar(companyIdx) == null) {
+		if (petHotelMapper.averageStar(companyIdx) == null) { // 31 -- ReviewDto reviewDto = petHotelService.averageStar(companyIdx); 타고 옴 - // averagestar 3.6 반환 
 			return new ReviewDto();
 		} else {
-			return petHotelMapper.averageStar(companyIdx);
+			return petHotelMapper.averageStar(companyIdx); // 32
 		}
 	}
 
@@ -188,15 +188,16 @@ public class PetHotelServiceImpl implements PetHotelService {
 
 	@Override
 	public List<ReviewDto> reviewlist2Paging(int offset, int companyIdx) {
-		Map<String, Object> param = new HashMap<>();
-		param.put("offset", offset);
-		param.put("companyIdx", companyIdx);
-		return petHotelMapper.reviewlist2Paging(param);
+		Map<String, Object> param = new HashMap<>(); // 13 --08/30 --List<ReviewDto> reviewlist2 = petHotelService.reviewlist2Paging(offset, companyIdx); 이거타고 옴
+		param.put("offset", offset); // 14
+		param.put("companyIdx", companyIdx); // 15
+		return petHotelMapper.reviewlist2Paging(param); // 16 --댓글 내용들 반환 
 	}
 
 	@Override
 	public int reviewCount(int companyIdx) {
-		return petHotelMapper.reviewCount(companyIdx);
+		return petHotelMapper.reviewCount(companyIdx); // 19 --컨트롤러--int totalReviews = petHotelService.reviewCount(companyIdx); 이거 타고 옴
+	//  20 ↑ 리뷰 갯수 카운트해서 그 값 리턴 
 	}
 
 }

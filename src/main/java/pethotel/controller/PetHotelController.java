@@ -187,33 +187,33 @@ public class PetHotelController {
 			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage)
 			throws Exception {
 		// 리뷰 페이징처리
-		int pageSize = 5;
-		int offset = (currentPage - 1) * pageSize;
+		int pageSize = 5; // 1 --08/30
+		int offset = (currentPage - 1) * pageSize; // 2
 
 		// 업체 상세정보
-		CompanyDto companydetail = petHotelService.companydetail(companyIdx);
-		ModelAndView mv = new ModelAndView("company_info_detail.html");
+		CompanyDto companydetail = petHotelService.companydetail(companyIdx); // 3 > 5
+		ModelAndView mv = new ModelAndView("company_info_detail.html"); // 6
 
-		mv.addObject("companydetail", companydetail);
+		mv.addObject("companydetail", companydetail); // 7
 
-		CompanyDto reviewlist1 = petHotelService.reviewlist1(companyIdx);
-		mv.addObject("reviewlist1", reviewlist1);
+ 		CompanyDto reviewlist1 = petHotelService.reviewlist1(companyIdx);// 8 > 10
+		mv.addObject("reviewlist1", reviewlist1); // 11
 
-		List<ReviewDto> reviewlist2 = petHotelService.reviewlist2Paging(offset, companyIdx);
-		int totalReviews = petHotelService.reviewCount(companyIdx);
-		mv.addObject("reviewlist2", reviewlist2);
-		mv.addObject("pageCount", Math.ceil(totalReviews / 5.0));
-		mv.addObject("currentPage", currentPage);
-		mv.addObject("companyIdx", companyIdx);
+		List<ReviewDto> reviewlist2 = petHotelService.reviewlist2Paging(offset, companyIdx); // 12 > 17
+		int totalReviews = petHotelService.reviewCount(companyIdx); // 18 > 21 --리턴값으로 받은 리뷰 카운드 숫자를 토탈로 설정
+		mv.addObject("reviewlist2", reviewlist2);// 22
+		mv.addObject("pageCount", Math.ceil(totalReviews / 5.0));// 23 -- 5개씩만 보이도록 페이징 처리
+		mv.addObject("currentPage", currentPage); //24
+		mv.addObject("companyIdx", companyIdx); // 25    --뷰 화면단에 해당 내용의 객체들 추가?
 
 		// 별점 불러오는거
-		List<StarDto> starDto = petHotelService.star();
-		mv.addObject("star", starDto);
+		List<StarDto> starDto = petHotelService.star(); //26 > 28 impl에서 리턴한 값 가져옴
+		mv.addObject("star", starDto); // 29 뷰 ~ star에 starDto타입으로 객체 추가?
 
 		// 평점 (이거 안되는데 확인해봐야함)
-		ReviewDto reviewDto = petHotelService.averageStar(companyIdx);
-		mv.addObject("averageStar", reviewDto);
-		return mv;
+		ReviewDto reviewDto = petHotelService.averageStar(companyIdx); //30 > 33 -- 3.6 반환한거 가져오겠지
+		mv.addObject("averageStar", reviewDto); // 34 -- 가져온 거 view 파일에 averageStar이라는 속성의 이름으로(=key로) reviewDto =값(value)을 담은 객체를 view로 전달
+		return mv; //위 내용 까지 담긴 뷰 반환
 	}
 
 /////여기수정함 고쳐야함
