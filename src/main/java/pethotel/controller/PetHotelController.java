@@ -113,7 +113,9 @@ public class PetHotelController {
 	@PostMapping("/company/regist")
 	public String insertcompany(@RequestParam("file") MultipartFile file, CompanyDto companydto) throws Exception {
 		petHotelService.insertcompany(file, companydto);
-		return ("redirect:/company");
+		/* 8/31 
+		 * 업체 등록 페이지에서 파일 선택 및 내용 입력 후 등록을 누르면  */
+		return ("redirect:/company"); //impl파일에서 관련 메서드 모두 실행 및 저장 후 해당 내용 반영된 /company로 리다이렉트 > 신규 업체등록 완료. 
 	}
 	// 08/25
 	// 뭔가 url이며 컨트롤러 순서도 뒤죽박죽이고 조잡한 부분이 너무 많음. - 효율적으로 개선해야함.

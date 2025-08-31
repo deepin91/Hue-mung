@@ -68,18 +68,25 @@ public class PetHotelServiceImpl implements PetHotelService {
 	//업체등록버튼
 	@Override
 	public void insertcompany(MultipartFile file,CompanyDto companydto) throws Exception {
-		String savedFilePath = saveFile(file);
-		companydto.setCompanyPhoto(savedFilePath);
-		petHotelMapper.insertcompany(companydto);
+		String savedFilePath = saveFile(file); // --08/31 컨트롤러의 업체 등록 메서드를 타면 이 줄로 타짐 -> companyDto타입의 객체에 view에서 입력한 내용들 형식에 맞춰 저장됨 + 파일 도 file에 저장
+		// ↑ 아래 메서드 다 타고난 후에 다시 여기로 돌아옴 > companyDto로 이동해서 업로드한 파일을 설정
+		companydto.setCompanyPhoto(savedFilePath); // conpanyDto의 conpanyPhoth에 savedFilePath set
+		petHotelMapper.insertcompany(companydto); // 새로 등록한 업체에 대한 정보 저장 및 그 다음 이 줄로 이동 --> generated_key=5 로 설정됨
 		
 	}
-	@Override
+	/* public String saveFile(MultipartFile file) - 스프링에서 업로드된 파일을 받아 처리하는 메서드.
+		MultipartFile은 업로드된 파일 데이터를 다룰 수 있는 스프링 제공 객체. */
+	@Override 
 	public String saveFile(MultipartFile file) throws Exception {
-		//동일파일 이름 저장되는 것 방지 
-		String savedFilePath = uploadPath + UUID.randomUUID().toString() + "_"+ file.getOriginalFilename();
-		File uploadFile = new File(savedFilePath);
-		file.transferTo(uploadFile);
-		
+		// ↓ UUID.randomUUID().toString() + "_" 를 중간에 넣어 동일파일 이름 저장되는 것 방지 
+		String savedFilePath = uploadPath + UUID.randomUUID().toString() + "_"+ file.getOriginalFilename(); // --08/31 String savedFilePath = saveFile(file); 이 줄 f5하면 여기로 탐 
+		// ↑ petHotelMapper과 uploadPath(uploadPath : 미리 지정된 저장 경로) + file(file , part)가 담겨있음 
+		File uploadFile = new File(savedFilePath); // ----이 줄로 이동하면서 savedFilePath가 넘어옴
+		//자바 File 객체 생성. savedFilePath 문자열을 실제 파일 객체로 변환 (아직 저장된 건 아님).
+		// 이 위치에 이런 파일을 만들 거다 ~ 라는 파일 핸들러를 준비
+		file.transferTo(uploadFile); // ----이 줄로 이동하면서 uploadFile(filePath-null/path(UUID 등 붙은) / prefixLength-3 / status -null)가 넘어옴
+		/* file.transferTo(uploadFile); - MultipartFile의 실제 데이터를 uploadFile 경로로 복사(저장) 업로드된 파일이 지정된 경로에 물리적으로 저장됨.
+		ex) dog.png 업로드 시 C:/uploads/UUID_dog.png 파일이 생성됨 */
 		return savedFilePath;
 	}
 
