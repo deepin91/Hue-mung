@@ -75,14 +75,18 @@ public class PetHotelController {
 //      mv.addObject("키(key)", 값(value); - 사용 방식
 		return mv;
 	}
-
-	@PostMapping("/reply/1234")
-	// ***개선점***
+	/* **개선점** */
+	/* Spring Security의 @PreAuthorize("hasRole('ADMIN')") 등으로 역할 검증을 하는 걸 권장. 인터셉터는 인증/로깅 위주, 권한은 시큐리티가 더 표준적이라함 */
+	// + 관리자용 @PostMapping 컨트롤러 메서드 하나 새로 만드는 게 더 보편적, 직관적 인듯
 	// 하단 댓글 작성할 수 있는 사람 - 관리자 권한 보유한 사람 으로 권한제어 필요함.
+	@PostMapping("/reply/1234") // --> 여기 url도 좀 더 직관적이게 ex)QNAReply_admin라던지 그런 거로 바꿔야 함. 다른 댓글 url과 중복되어 보일 수도
+	// interceptor에 설정을 추가해야하나
 	public String insertreply(HttpSession session, ConsultingDto consultingDto) throws Exception {
 		petHotelService.insertreply(consultingDto);
 //		return ("redirect:/detail.openconsultDetail.do");
-		return ("redirect:/detail.openconsultDetail.do?consultingIdx=" + consultingDto.getConsultingIdx());
+		return ("redirect:/detail.openconsultDetail.do?consultingIdx=" + consultingDto.getConsultingIdx()); // 다시 돌아와서 serviceImpl에서 저장된 값을
+		// consultingDto 의 @Data로 타져서 그곳의 consultingIdx를 가져와 "redirect:/detail.openconsultDetail.do?consultingIdx=" 뒤에 consultingIdx라는 파라미터를 붙여서 전달 
+		// > 새로 등록된 댓글을 확인 가능도록 등록 직후(컨트롤러 메서드 종료 후) 해당 댓글이 있는 상세페이지로 리다이렉트 처리
 	}
 
 	// ---------------------qnalist--------------------------------------------

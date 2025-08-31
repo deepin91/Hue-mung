@@ -56,9 +56,8 @@ public class PetHotelServiceImpl implements PetHotelService {
 
 
 	@Override
-	public void insertreply(ConsultingDto consultingDto) throws Exception {
-		petHotelMapper.insertreply(consultingDto);
-		
+	public void insertreply(ConsultingDto consultingDto) throws Exception { //@PostMapping라 return하진 않음 
+		petHotelMapper.insertreply(consultingDto); // 08/31 -- Q&A 상세에서 댓글 작성하는 메서드를 타면 여기로 옴 consultingDto 값을 담도록 연결
 	}
 	
 	@Override
