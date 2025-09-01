@@ -238,19 +238,22 @@ public class PetHotelController {
 		return ("redirect:/companyDetail.do?companyIdx=" + reviewDto.getCompanyIdx());
 	}
 
+	
 	// --------------------예약 등록----------------------------
+	
 	@PostMapping("/apply")
 	public String insertapply(ApplyDto applyDto) throws Exception {
 		petHotelService.insertapply(applyDto);
 		return ("redirect:/applylist?companyIdx=" + applyDto.getCompanyIdx());
 	}
-
+	
+	/* 9/1 -- 아마 ↓이건 mv (입력 폼)불러오는 메서드같은 > 그 후 PostMapping 타지고 */
 	@GetMapping("/apply123")
 	public ModelAndView displayinsert(@RequestParam int companyIdx) throws Exception {
-		ModelAndView mv = new ModelAndView("apply.html");
-		CompanyDto companyDto = petHotelService.displayinsert(companyIdx);
-		mv.addObject("displayinsert", companyDto);
-		return mv;
+		ModelAndView mv = new ModelAndView("apply.html"); // 1 -- 9/1 업체상세에서 예약하기를 누르면 여기로 타짐
+		CompanyDto companyDto = petHotelService.displayinsert(companyIdx);// 2 > 4
+		mv.addObject("displayinsert", companyDto);// 5 -- displayinsert라는 이름의 companyDto타입 객체를 view에 추가
+		return mv; // 6 ㄴ 그걸 리턴
 	}
 
 	@GetMapping("/applylist")

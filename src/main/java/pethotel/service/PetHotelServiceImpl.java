@@ -160,7 +160,7 @@ public class PetHotelServiceImpl implements PetHotelService {
 
 	@Override
 	public CompanyDto displayinsert(int companyIdx) {
-		return petHotelMapper.displayinsert(companyIdx);
+		return petHotelMapper.displayinsert(companyIdx); // 3 -- 9/1 예약하기 클릭 시 - CompanyDto companyDto = petHotelService.displayinsert(companyIdx); 여기서 이 줄로 타짐 
 	}
 //페이징
 
