@@ -243,8 +243,8 @@ public class PetHotelController {
 	
 	@PostMapping("/apply")
 	public String insertapply(ApplyDto applyDto) throws Exception {
-		petHotelService.insertapply(applyDto);
-		return ("redirect:/applylist?companyIdx=" + applyDto.getCompanyIdx());
+		petHotelService.insertapply(applyDto); // -- 9/1 > 예약등록폼에 내용 입력 후 등록 누르면 타짐 1 > 3
+		return ("redirect:/applylist?companyIdx=" + applyDto.getCompanyIdx()); // 4 바로 입력된 갑 저장 후 보여지도록 리다이렉트 주소에 applyDto의 companyIdx를 가져와 반환
 	}
 	
 	/* 9/1 -- 아마 ↓이건 mv (입력 폼)불러오는 메서드같은 > 그 후 PostMapping 타지고 */
@@ -260,13 +260,13 @@ public class PetHotelController {
 	public ModelAndView applylist(
 			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
 			@RequestParam int companyIdx) throws Exception {
-		ModelAndView mv = new ModelAndView("applylist.html");
-		List<ApplyDto> list = petHotelService.applylist((currentPage - 1) * 10, companyIdx);
-		mv.addObject("companyIdx", companyIdx);
-		mv.addObject("applylist", list);
-		mv.addObject("pageCount", Math.ceil(petHotelService.selectApplyListCount() / 10.0));
-		mv.addObject("currentPage", currentPage);
-		return mv;
+		ModelAndView mv = new ModelAndView("applylist.html"); // 9/1 -- 1
+		List<ApplyDto> list = petHotelService.applylist((currentPage - 1) * 10, companyIdx);// 2 > 7 --리스트 형식으로 
+		mv.addObject("companyIdx", companyIdx); // 8
+		mv.addObject("applylist", list); // 9
+		mv.addObject("pageCount", Math.ceil(petHotelService.selectApplyListCount() / 10.0)); // 10 --페이징
+		mv.addObject("currentPage", currentPage); // 12
+		return mv; // 13
 	}
 
 	// --------------------예약 확인------------------------

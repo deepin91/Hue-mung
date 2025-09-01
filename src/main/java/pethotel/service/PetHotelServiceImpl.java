@@ -137,7 +137,7 @@ public class PetHotelServiceImpl implements PetHotelService {
 	//예약등록---------------------------------------------------
 	@Override
 	public void insertapply(ApplyDto applyDto) throws Exception {
-		petHotelMapper.insertapply(applyDto);
+		petHotelMapper.insertapply(applyDto); // 9/1 -- 2 -- petHotelService.insertapply(applyDto); 이 줄에서 여기로 타짐
 	}
 	//예약상세
 	@Override
@@ -147,15 +147,15 @@ public class PetHotelServiceImpl implements PetHotelService {
 	@Override
 	public List<ApplyDto> applylist(int offset,int companyIdx) throws Exception {
 
-		Map<String, Object> map = new HashMap<>();
-		map.put("offset", offset);
-		map.put("companyIdx", companyIdx);
-
-		return petHotelMapper.applylist(map);
+		Map<String, Object> map = new HashMap<>();// 3 --List<ApplyDto> list = petHotelService.applylist((currentPage - 1) * 10, companyIdx); 이거 타고 여기로 옴
+		map.put("offset", offset); // 4 -- 위에서 재정의한 String타입의 객체에 offset의 이름으로 offset을 / companyIdx라는 이름으로 companyIdx를 넣음(저장)
+		map.put("companyIdx", companyIdx); // --> 5 --해당메서드가 DB와 매핑시키는 역할인듯
+		return petHotelMapper.applylist(map); // 6
 	}
+	
 	@Override
 	public int selectApplyListCount() throws Exception {
-		return petHotelMapper.selectApplyListCount();
+		return petHotelMapper.selectApplyListCount(); // 9/1 -- 11 -- mv.addObject("pageCount", Math.ceil(petHotelService.selectApplyListCount() / 10.0));이거 타고 페이징 처리하러 여기 타짐 아마도
 	}
 
 	@Override
