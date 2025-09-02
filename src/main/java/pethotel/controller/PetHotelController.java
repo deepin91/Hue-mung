@@ -241,7 +241,7 @@ public class PetHotelController {
 	
 	// --------------------예약 등록----------------------------
 	
-	@PostMapping("/apply")
+	@PostMapping("/apply") // 9/2 -- url좀 더 직관적인 거 없을지 싹 다 고민 후 수정해야할듯 
 	public String insertapply(ApplyDto applyDto) throws Exception {
 		petHotelService.insertapply(applyDto); // -- 9/1 > 예약등록폼에 내용 입력 후 등록 누르면 타짐 1 > 3
 		return ("redirect:/applylist?companyIdx=" + applyDto.getCompanyIdx()); // 4 바로 입력된 갑 저장 후 보여지도록 리다이렉트 주소에 applyDto의 companyIdx를 가져와 반환
@@ -270,6 +270,8 @@ public class PetHotelController {
 	}
 
 	// --------------------예약 확인------------------------
+	// 9/2 -- 예약확인 후 뒤로가기 라던지 수정/삭제라던지 기능 추가 필요해보임 전반적으로 다
+	// 9/2 예약 목록도 자기가 한거만 뜨는건지 아님 남들 내역도 뜨는건지 불확실해보여서 개선필요 - 예약 확정같은 것도 필요해보임
 	@GetMapping("/reservation")
 	public ModelAndView reservation(@RequestParam int applyIdx) throws Exception {
 		ModelAndView mv = new ModelAndView("reservation.html");
